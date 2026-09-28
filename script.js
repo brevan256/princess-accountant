@@ -11,12 +11,9 @@ const photoMessage = document.querySelector(".photo-message p");
 
 const music = document.getElementById("backgroundMusic");
 
-const videoMemory = document.getElementById("videoMemory");
-const ourVideo = document.getElementById("ourVideo");
-
 
 // ==========================================
-// SLIDES
+// OUR PHOTOS ❤️
 // ==========================================
 
 const slides = [
@@ -70,8 +67,8 @@ const slides = [
 
 let currentSlide = 0;
 let slideshow = null;
-let videoPlayed = false;
 
+// Each photo stays for 6 seconds
 const PHOTO_TIME = 6000;
 
 
@@ -81,13 +78,15 @@ const PHOTO_TIME = 6000;
 
 openButton.addEventListener("click", function () {
 
+    // Start Photograph
     music.volume = 0.7;
 
-    music.play().catch(function () {
-        console.log("Music could not start.");
+    music.play().catch(function (error) {
+        console.log("Music could not start:", error);
     });
 
 
+    // Fade welcome screen
     welcome.style.transition = "opacity 1s ease";
     welcome.style.opacity = "0";
 
@@ -97,6 +96,7 @@ openButton.addEventListener("click", function () {
         welcome.style.display = "none";
 
         memories.style.display = "block";
+        memories.style.opacity = "1";
         memories.classList.add("show");
 
         currentSlide = 0;
@@ -111,7 +111,7 @@ openButton.addEventListener("click", function () {
 
 
 // ==========================================
-// START TIMER
+// START SLIDESHOW
 // ==========================================
 
 function startSlideshow() {
@@ -133,23 +133,31 @@ function startSlideshow() {
 
 function showSlide(index) {
 
+    // Safety check
     if (index >= slides.length) {
+
         endSlideshow();
+
         return;
     }
 
 
+    // Fade old photo
     memoryPhoto.style.opacity = "0";
     photoMessage.style.opacity = "0";
 
 
-    const testImage = new Image();
+    // Preload next photo
+    const newImage = new Image();
 
-    testImage.src = slides[index].photo;
+    newImage.src = slides[index].photo;
 
 
-    // PHOTO SUCCESSFULLY LOADED
-    testImage.onload = function () {
+    // ======================================
+    // PHOTO LOADED SUCCESSFULLY
+    // ======================================
+
+    newImage.onload = function () {
 
         setTimeout(function () {
 
@@ -159,6 +167,7 @@ function showSlide(index) {
                 slides[index].message;
 
 
+            // Restart zoom animation
             memoryPhoto.style.animation = "none";
 
             void memoryPhoto.offsetWidth;
@@ -167,6 +176,7 @@ function showSlide(index) {
                 "slowZoom 8s ease forwards";
 
 
+            // Fade photo in
             memoryPhoto.style.opacity = "1";
 
             photoMessage.style.opacity = "1";
@@ -176,18 +186,31 @@ function showSlide(index) {
     };
 
 
-    // PHOTO FAILED
-    testImage.onerror = function () {
+    // ======================================
+    // PHOTO FAILED TO LOAD
+    // ======================================
+
+    newImage.onerror = function () {
 
         console.log(
-            "Could not load:",
+            "Photo failed:",
             slides[index].photo
         );
+
 
         // Skip broken photo
         currentSlide++;
 
-        showSlide(currentSlide);
+
+        if (currentSlide < slides.length) {
+
+            showSlide(currentSlide);
+
+        } else {
+
+            endSlideshow();
+
+        }
 
     };
 
@@ -195,34 +218,13 @@ function showSlide(index) {
 
 
 // ==========================================
-// NEXT SLIDE
+// NEXT PHOTO
 // ==========================================
 
 function nextSlide() {
 
     currentSlide++;
 
-
-    // ======================================
-    // VIDEO AFTER PHOTO 5
-    // ======================================
-
-    if (
-        currentSlide === 5 &&
-        videoPlayed === false
-    ) {
-
-        clearInterval(slideshow);
-
-        playOurVideo();
-
-        return;
-    }
-
-
-    // ======================================
-    // NEXT PHOTO
-    // ======================================
 
     if (currentSlide < slides.length) {
 
@@ -242,184 +244,16 @@ function nextSlide() {
 
 
 // ==========================================
-// PLAY VIDEO
-// ==========================================
-
-function playOurVideo() {
-
-    videoPlayed = true;
-
-    music.pause();
-
-    memories.style.opacity = "0";
-
-
-    setTimeout(function () {
-
-        memories.style.display = "none";
-
-        videoMemory.style.display = "flex";
-
-
-        setTimeout(function () {
-
-            videoMemory.classList.add("show");
-
-            ourVideo.currentTime = 0;
-
-            const playAttempt = ourVideo.play();
-
-
-            if (playAttempt !== undefined) {
-
-                playAttempt.catch(function (error) {
-
-                    console.log(
-                        "Video failed:",
-                        error
-                    );
-
-                    // IMPORTANT:
-                    // Don't let slideshow get stuck
-                    skipVideo();
-
-                });
-
-            }
-
-        }, 200);
-
-    }, 700);
-
-
-    // SAFETY CHECK
-    // If video still hasn't started after 5 seconds,
-    // continue the slideshow.
-
-    setTimeout(function () {
-
-        if (
-            ourVideo.paused &&
-            !ourVideo.ended
-        ) {
-
-            skipVideo();
-
-        }
-
-    }, 5000);
-
-}
-
-
-// ==========================================
-// VIDEO FINISHED
-// ==========================================
-
-ourVideo.addEventListener(
-    "ended",
-    function () {
-
-        continueAfterVideo();
-
-    }
-);
-
-
-// ==========================================
-// VIDEO ERROR
-// ==========================================
-
-ourVideo.addEventListener(
-    "error",
-    function () {
-
-        console.log("Video file error.");
-
-        skipVideo();
-
-    }
-);
-
-
-// ==========================================
-// SKIP BROKEN VIDEO
-// ==========================================
-
-function skipVideo() {
-
-    try {
-
-        ourVideo.pause();
-
-    } catch (error) {
-
-        console.log(error);
-
-    }
-
-
-    continueAfterVideo();
-
-}
-
-
-// ==========================================
-// CONTINUE AFTER VIDEO
-// ==========================================
-
-function continueAfterVideo() {
-
-    videoMemory.classList.remove("show");
-
-
-    setTimeout(function () {
-
-        videoMemory.style.display = "none";
-
-
-        memories.style.display = "block";
-
-
-        setTimeout(function () {
-
-            memories.style.opacity = "1";
-
-
-            // Resume Photograph
-
-            music.play().catch(function () {
-                console.log(
-                    "Music could not resume."
-                );
-            });
-
-
-            // We stopped after photo 5.
-            // currentSlide is already 5,
-            // therefore show photo 6.
-
-            showSlide(currentSlide);
-
-
-            startSlideshow();
-
-        }, 100);
-
-    }, 700);
-
-}
-
-
-// ==========================================
-// END SLIDESHOW ❤️
+// ENDING ❤️
 // ==========================================
 
 function endSlideshow() {
 
     clearInterval(slideshow);
 
+
     memoryPhoto.style.opacity = "0";
+
     photoMessage.style.opacity = "0";
 
 
