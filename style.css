@@ -1,6 +1,6 @@
-/* =========================
+/* ==========================================
    RESET
-========================= */
+========================================== */
 
 * {
     margin: 0;
@@ -15,16 +15,16 @@ body {
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #080808;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050505;
     color: white;
     overflow: hidden;
 }
 
 
-/* =========================
-   WELCOME SCREEN
-========================= */
+/* ==========================================
+   WELCOME SCREEN ❤️
+========================================== */
 
 .welcome {
     position: fixed;
@@ -39,6 +39,7 @@ body {
     align-items: center;
 
     padding: 25px;
+
     text-align: center;
 
     background:
@@ -49,7 +50,7 @@ body {
             #050505 100%
         );
 
-    z-index: 10;
+    z-index: 100;
 }
 
 .welcome-content {
@@ -59,36 +60,47 @@ body {
     animation: fadeIn 2s ease;
 }
 
+
+/* HEART */
+
 .heart {
     font-size: 55px;
+
     margin-bottom: 25px;
 
     animation: heartbeat 1.5s infinite;
 }
 
+
+/* SMALL TITLE */
+
 .small-text {
     margin-bottom: 12px;
 
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 4px;
 
     color: #e0a5b5;
 }
 
+
+/* PRINCESS ACCOUNTANT */
+
 h1 {
     margin-bottom: 25px;
 
-    font-size: clamp(30px, 8vw, 55px);
+    font-size: clamp(32px, 8vw, 55px);
     line-height: 1.1;
 
     letter-spacing: 2px;
 
-    background: linear-gradient(
-        90deg,
-        #ffffff,
-        #ff9db8,
-        #ffffff
-    );
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #ff9db8,
+            #ffffff
+        );
 
     -webkit-background-clip: text;
     background-clip: text;
@@ -96,6 +108,9 @@ h1 {
     -webkit-text-fill-color: transparent;
     color: transparent;
 }
+
+
+/* WELCOME MESSAGE */
 
 .message {
     margin-bottom: 35px;
@@ -107,9 +122,9 @@ h1 {
 }
 
 
-/* =========================
-   BUTTON
-========================= */
+/* ==========================================
+   OPEN BUTTON
+========================================== */
 
 button {
     border: none;
@@ -128,7 +143,7 @@ button {
     cursor: pointer;
 
     box-shadow:
-        0 8px 30px rgba(255, 70, 120, 0.25);
+        0 8px 30px rgba(255, 70, 120, 0.30);
 
     transition:
         transform 0.3s ease,
@@ -139,13 +154,13 @@ button:hover {
     transform: scale(1.05);
 
     box-shadow:
-        0 10px 40px rgba(255, 70, 120, 0.45);
+        0 10px 40px rgba(255, 70, 120, 0.50);
 }
 
 
-/* =========================
-   MEMORIES
-========================= */
+/* ==========================================
+   PHOTO SLIDESHOW 📸
+========================================== */
 
 .memories {
     position: fixed;
@@ -155,46 +170,63 @@ button:hover {
     height: 100vh;
     height: 100dvh;
 
-    background: black;
-
     display: none;
+
+    background: #050505;
 
     opacity: 0;
 
     overflow: hidden;
 
-    transition: opacity 1.5s ease;
+    transition: opacity 1.2s ease;
 
-    z-index: 20;
+    z-index: 50;
 }
 
 .memories.show {
     opacity: 1;
 }
 
+
+/* PHOTO CONTAINER */
+
 .photo-container {
     position: relative;
 
     width: 100%;
     height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     overflow: hidden;
 
-    background: black;
+    background:
+        radial-gradient(
+            circle at center,
+            #251016,
+            #050505 70%
+        );
 }
 
 
-/* =========================
-   PHOTO
-========================= */
+/* ==========================================
+   MAIN PHOTO
+========================================== */
 
 #memoryPhoto {
     position: absolute;
-    inset: 0;
 
     width: 100%;
     height: 100%;
 
-    object-fit: cover;
+    /*
+       CONTAIN means the complete picture
+       remains visible without cutting faces.
+    */
+
+    object-fit: contain;
     object-position: center;
 
     opacity: 1;
@@ -202,12 +234,14 @@ button:hover {
     transition: opacity 1.2s ease;
 
     animation: slowZoom 8s ease forwards;
+
+    z-index: 0;
 }
 
 
-/* =========================
-   DARK OVERLAY
-========================= */
+/* ==========================================
+   DARK PHOTO OVERLAY
+========================================== */
 
 .photo-overlay {
     position: absolute;
@@ -217,33 +251,38 @@ button:hover {
 
     pointer-events: none;
 
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.05) 0%,
-        rgba(0, 0, 0, 0.10) 50%,
-        rgba(0, 0, 0, 0.80) 100%
-    );
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.02) 0%,
+            rgba(0, 0, 0, 0.05) 45%,
+            rgba(0, 0, 0, 0.75) 100%
+        );
 }
 
 
-/* =========================
-   PHOTO MESSAGE
-========================= */
+/* ==========================================
+   PHOTO MESSAGE ❤️
+========================================== */
 
 .photo-message {
     position: absolute;
 
     left: 20px;
     right: 20px;
-    bottom: 70px;
+    bottom: 65px;
 
-    z-index: 2;
+    z-index: 5;
 
     text-align: center;
 }
 
 .photo-message p {
-    font-size: clamp(21px, 6vw, 36px);
+    max-width: 700px;
+
+    margin: auto;
+
+    font-size: clamp(20px, 5vw, 34px);
     font-weight: 300;
     line-height: 1.4;
 
@@ -252,15 +291,174 @@ button:hover {
     opacity: 1;
 
     text-shadow:
-        0 3px 15px rgba(0, 0, 0, 0.9);
+        0 3px 8px rgba(0, 0, 0, 1),
+        0 5px 20px rgba(0, 0, 0, 0.9);
 
     transition: opacity 1.2s ease;
 }
 
 
-/* =========================
+/* ==========================================
+   VIDEO SECTION 🎥
+========================================== */
+
+.video-memory {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    background: black;
+
+    opacity: 0;
+
+    overflow: hidden;
+
+    transition: opacity 1s ease;
+
+    z-index: 80;
+}
+
+.video-memory.show {
+    opacity: 1;
+}
+
+
+/* VIDEO */
+
+#ourVideo {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    background: black;
+}
+
+
+/* VIDEO MESSAGE */
+
+.video-caption {
+    position: absolute;
+
+    left: 20px;
+    right: 20px;
+    bottom: 45px;
+
+    z-index: 5;
+
+    text-align: center;
+
+    pointer-events: none;
+}
+
+.video-caption p {
+    font-size: clamp(18px, 5vw, 28px);
+
+    color: white;
+
+    text-shadow:
+        0 3px 10px black,
+        0 5px 20px black;
+}
+
+
+/* ==========================================
+   FINAL ENDING ❤️
+========================================== */
+
+.ending {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #491322 0%,
+            #18070c 50%,
+            #050505 100%
+        );
+
+    animation: fadeIn 2s ease;
+}
+
+
+/* ENDING HEART */
+
+.ending-heart {
+    margin-bottom: 25px;
+
+    font-size: 60px;
+
+    animation: heartbeat 1.5s infinite;
+}
+
+
+/* SMALL ENDING TEXT */
+
+.ending-small {
+    margin-bottom: 15px;
+
+    font-size: 11px;
+    letter-spacing: 3px;
+
+    color: #e0a5b5;
+}
+
+
+/* ENDING TITLE */
+
+.ending h1 {
+    margin-bottom: 25px;
+}
+
+
+/* ENDING MESSAGE */
+
+.ending-message {
+    width: 100%;
+    max-width: 450px;
+
+    font-size: 16px;
+    line-height: 1.7;
+
+    color: #eeeeee;
+}
+
+.ending-message strong {
+    font-size: 23px;
+
+    color: #ff9db8;
+}
+
+
+/* ==========================================
    ANIMATIONS
-========================= */
+========================================== */
+
+
+/* HEART BEAT */
 
 @keyframes heartbeat {
 
@@ -273,6 +471,9 @@ button:hover {
         transform: scale(1.18);
     }
 }
+
+
+/* FADE IN */
 
 @keyframes fadeIn {
 
@@ -287,6 +488,9 @@ button:hover {
     }
 }
 
+
+/* CINEMATIC PHOTO ZOOM */
+
 @keyframes slowZoom {
 
     from {
@@ -294,98 +498,116 @@ button:hover {
     }
 
     to {
-        transform: scale(1.08);
+        transform: scale(1.04);
     }
 }
 
 
-/* =========================
-   SMALL PHONES
-========================= */
+/* ==========================================
+   MOBILE PHONES 📱
+========================================== */
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
 
     .welcome {
-        padding: 20px;
+        padding: 22px;
     }
 
+
     .heart {
-        font-size: 48px;
+        font-size: 50px;
         margin-bottom: 20px;
     }
+
 
     .small-text {
         font-size: 10px;
         letter-spacing: 3px;
     }
 
+
     h1 {
-        font-size: 34px;
+        font-size: clamp(30px, 10vw, 42px);
     }
+
 
     .message {
         font-size: 14px;
+        line-height: 1.7;
     }
+
+
+    button {
+        padding: 15px 24px;
+        font-size: 14px;
+    }
+
+
+    #memoryPhoto {
+        object-fit: contain;
+    }
+
 
     .photo-message {
-        bottom: 55px;
+        left: 18px;
+        right: 18px;
+        bottom: 50px;
+    }
+
+
+    .photo-message p {
+        font-size: 21px;
+    }
+
+
+    .video-caption {
+        bottom: 35px;
+    }
+
+
+    .video-caption p {
+        font-size: 19px;
+    }
+
+
+    .ending {
+        padding: 25px;
+    }
+
+
+    .ending-heart {
+        font-size: 52px;
+    }
+
+
+    .ending-message {
+        font-size: 15px;
     }
 }
-/* =========================
-   VIDEO MEMORY
-========================= */
 
-.video-memory {
-    position: fixed;
-    inset: 0;
 
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
+/* ==========================================
+   VERY SMALL PHONES
+========================================== */
 
-    background: black;
+@media (max-width: 380px) {
 
-    display: none;
+    h1 {
+        font-size: 29px;
+    }
 
-    justify-content: center;
-    align-items: center;
 
-    z-index: 30;
+    .message {
+        font-size: 13px;
+    }
 
-    opacity: 0;
 
-    transition: opacity 1s ease;
-}
+    .photo-message p {
+        font-size: 18px;
+    }
 
-.video-memory.show {
-    opacity: 1;
-}
 
-#ourVideo {
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-
-    background: black;
-}
-
-.video-caption {
-    position: absolute;
-
-    left: 20px;
-    right: 20px;
-    bottom: 50px;
-
-    text-align: center;
-
-    pointer-events: none;
-}
-
-.video-caption p {
-    color: white;
-
-    font-size: clamp(20px, 5vw, 30px);
-
-    text-shadow: 0 3px 15px black;
+    .ending-message {
+        font-size: 14px;
+    }
 }
